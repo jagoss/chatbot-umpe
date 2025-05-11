@@ -1,16 +1,16 @@
-# Chatbot RAG con Streamlit + FastAPI
+# RAG Chatbot with Streamlit + FastAPI
 
-Este proyecto implementa un chatbot basado en la arquitectura RAG (Retrieval-Augmented Generation), compuesto por:
+This project implements a chatbot based on the RAG (Retrieval-Augmented Generation) architecture, composed of:
 
-- **Frontend:** Streamlit.
-- **Backend:** FastAPI.
-- **Embeddings:** SentenceTransformers (`all-MiniLM-L6-v2`).
-- **Vector Store:** FAISS.
-- **Generación:** Modelo LLM genérico (`distilgpt2`).
+- **Frontend:** Streamlit
+- **Backend:** FastAPI
+- **Embeddings:** SentenceTransformers (`all-MiniLM-L6-v2`)
+- **Vector Store:** FAISS
+- **Generation:** Generic LLM model (`distilgpt2`)
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 chatbot_project/
@@ -33,53 +33,72 @@ chatbot_project/
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── docker-compose.yml
+├── run_chatbot.sh
 └── README.md
 ```
 
 ---
 
-## 🚀 Instalación y Ejecución
+## 🚀 Installation and Execution
 
-### Prerequisitos
+### Prerequisites
 
 - Docker
 - Docker Compose
 
-### Paso a Paso
+### Quick Start
+
+Run the provided shell script to automatically build and launch the backend and frontend containers:
 
 ```bash
-git clone https://github.com/tuusuario/chatbot-rag.git
-cd chatbot-rag
-docker-compose up --build
+./run_chatbot.sh
 ```
 
-Accede a la interfaz en: [http://localhost:8501](http://localhost:8501)
+This script will:
+
+1. Build the backend image and start it on port `8000`.
+2. Build the frontend image and start it on port `8501`.
+3. Automatically link both containers so the frontend can access the backend.
+
+Then, access the UI at: [http://localhost:8501](http://localhost:8501)
+
+Alternatively, you can run the containers manually:
+
+```bash
+# Backend
+docker build -t rag-backend ./backend
+docker run -d -p 8000:8000 rag-backend
+
+# Frontend (after backend is up)
+docker build -t rag-frontend ./frontend
+docker run -d -p 8501:8501 --link rag-backend rag-frontend
+```
 
 ---
 
-## 📄 Detalles Técnicos
+## 📄 Technical Details
 
-- **Backend** expone `POST /ask` que recibe una pregunta y devuelve una respuesta generada por el modelo.
-- **RAGEngine** usa embeddings y recuperación contextual con FAISS.
-- **LLM** se basa en `distilgpt2` usando `transformers.pipeline`.
-
----
-
-## 📊 Diagrama de Arquitectura
-
-Ver archivo [`architecture_diagram.puml`](architecture_diagram.puml)
+- **Backend** exposes `POST /ask` endpoint which receives a user question and returns a generated answer.
+- **RAGEngine** handles embeddings and context retrieval via FAISS.
+- **LLM** uses `distilgpt2` via `transformers.pipeline`.
 
 ---
 
-## 🧠 Base de Conocimiento
+## 📊 Architecture Diagram
 
-Ubicada en `backend/app/data/knowledge_base.txt`. Puede reemplazarse por cualquier texto relevante al dominio.
+See [`architecture_diagram.puml`](architecture_diagram.puml)
 
 ---
 
-## 🛠️ Dependencias
+## 🧠 Knowledge Base
 
-Instaladas automáticamente por Docker. Para entorno local:
+Located at `backend/app/data/knowledge_base.txt`. You can replace it with any domain-relevant content.
+
+---
+
+## 🛠️ Dependencies
+
+Installed automatically via Docker. For manual setup:
 
 ```bash
 cd backend
@@ -88,6 +107,6 @@ pip install -r requirements.txt
 
 ---
 
-## ✍️ Créditos
+## ✍️ Credits
 
-Trabajo práctico - Master UM - Modelos de Lenguajes.
+Final project - Master UM - Language Models Workshop.
