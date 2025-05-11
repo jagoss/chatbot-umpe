@@ -1,0 +1,12 @@
+# Backend dependencies
+fastapi
+uvicorn
+sentence-transformers
+faiss-cpu
+numpy
+transformers
+torch
+
+# Frontend dependencies
+streamlit
+requests
