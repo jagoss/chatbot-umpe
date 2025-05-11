@@ -1,26 +1,24 @@
-
 @startuml
 skinparam componentStyle rectangle
+skinparam packageStyle rectangle
 
-package "Usuario" {
-    actor Usuario
-}
+actor Usuario
 
 package "Frontend (Streamlit)" {
-    component "App UI\n(app.py)" as Frontend
+    component "App UI (app.py)" as Frontend
 }
 
 package "Backend (FastAPI)" {
-    component "API REST\n(routes.py)" as API
-    component "RAG Service\n(rag_service.py)" as Service
-    component "RAG Engine\n(rag_engine.py)" as Engine
+    component "API REST (routes.py)" as API
+    component "RAG Service (rag_service.py)" as Service
+    component "RAG Engine (rag_engine.py)" as Engine
 }
 
 package "Infraestructura" {
     database "FAISS Index" as Faiss
-    component "Knowledge Base\n(knowledge_base.txt)" as KB
-    component "Embedder\n(SentenceTransformer)" as Embedder
-    component "LLM Generator\n(distilgpt2)" as Generator
+    component "Knowledge Base (knowledge_base.txt)" as KB
+    component "Embedder (SentenceTransformer)" as Embedder
+    component "LLM Generator (distilgpt2)" as Generator
 }
 
 Usuario --> Frontend : Ingresa pregunta
@@ -31,8 +29,8 @@ Service --> Engine : query(pregunta)
 Engine --> Faiss : Recuperar contexto
 Engine --> Embedder : Embedding pregunta
 Engine --> Generator : Generar respuesta (contexto + pregunta)
-Engine --> Service : respuesta generada
-Service --> API : respuesta
+Engine --> Service : Respuesta generada
+Service --> API : Respuesta
 API --> Frontend : JSON {respuesta}
 Frontend --> Usuario : Muestra respuesta
 
