@@ -3,6 +3,7 @@ fastapi
 uvicorn
 sentence-transformers
 faiss-cpu
+pydantic
 numpy
 transformers
 torch

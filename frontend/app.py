@@ -15,7 +15,7 @@ with st.form("question_form"):
     if submitted and question:
         with st.spinner("Thinking..."):
             try:
-                response = requests.post("http://backend:8000/ask", json={"question": question})
+                response = requests.post("http://backend:8000/question", json={"question": question})
                 if response.status_code == 200:
                     answer = response.json().get("answer", "No answer returned.")
                     st.success("✅ Here's what I found:")

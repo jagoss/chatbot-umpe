@@ -1,2 +1,5 @@
-AI is transforming industries.
-Python is widely used in data science.
+La inteligencia artificial está transformando muchas industrias modernas.
+Python es un lenguaje popular para ciencia de datos.
+El aprendizaje automático permite a los sistemas mejorar con la experiencia.
+Streamlit permite crear interfaces de usuario para aplicaciones de machine learning.
+FastAPI es un framework moderno para construir APIs en Python.
