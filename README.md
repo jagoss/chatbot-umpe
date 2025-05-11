@@ -10,6 +10,12 @@ This project implements a chatbot based on the RAG (Retrieval-Augmented Generati
 
 ---
 
+## 📊 Architecture Diagram
+
+![Architecture Diagram](.docs/architecture_diagram.png)
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -112,7 +118,7 @@ If you encounter connectivity issues between containers:
 
 ## 📊 Architecture Diagram
 
-See [`architecture_diagram.puml`](architecture_diagram.puml)
+See [`architecture_diagram.puml`](.docs/architecture_diagram.puml)
 
 ---
 
