@@ -21,7 +21,7 @@ class RAGEngine:
         <|start_header_id|>user<|end_header_id|>
         Eres un asistente respondiendo cuestiones referidas al reglamento del juego de cartas Magic: The Gathering.
         Se te provee el reglamento completo con su glosario para responder una pregunta.
-        Debes proveer una respuesta conversacional y en español.
+        Debes proveer una respuesta conversacional y en inglés.
         La respuesta siempre debe especificar los números de las secciones en que se basa.
         Si no sabes la respuesta porque no se encuentra en el reglamento del contexto dado responde con "No lo sé"
         No inventes la respuesta. No generes información que no se encuentre en el contexto dado.
