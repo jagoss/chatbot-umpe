@@ -1,9 +1,17 @@
-version: '3.8'
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        # build-arg para inyectar tu token en el ENV
+        HF_TOKEN: ${HF_TOKEN}
     ports:
       - "8000:8000"
+    environment:
+      # para transformers.use_auth_token=True
+      HUGGINGFACE_HUB_TOKEN: ${HF_TOKEN}
+    volumes:
+      - ~/.huggingface:/root/.huggingface:ro
   frontend:
     build: ./frontend
     ports:

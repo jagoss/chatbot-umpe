@@ -1,8 +1,14 @@
-fastapi
-uvicorn
-sentence-transformers
+accelerate
 faiss-cpu
+fastapi
+langchain
+langchain-core
+langchain_community
+langchain_huggingface
+huggingface-hub
 pydantic
 numpy
+sentence-transformers
 transformers
 torch
+uvicorn

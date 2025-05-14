@@ -1,26 +1,70 @@
+import json
+import torch
 from app.domain.rag_engine import RAGEngine
-from sentence_transformers import SentenceTransformer
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.llms import HuggingFacePipeline
+from langchain.schema import Document
+from langchain_community.vectorstores import FAISS
 from transformers import pipeline
-import faiss
-import numpy as np
+
+
+def _load_json(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return [json.loads(line) for line in f]
+
 
 class RAGService:
     def __init__(self):
-        self._docs = self._load_documents("app/data/knowledge_base.txt")
-        self._embedder = SentenceTransformer("all-MiniLM-L6-v2")
-        self._generator = pipeline("text-generation", model="distilgpt2")
+        self._docs = self._load_documents(["app/data/chunks_glosario_mtg.json", "app/data/chunks_reglas_mtg.json"])
+        self._embedder = None
+        self._index = None
+        self._generator = None
+        self._engine = None
+
+    def load_model(self):
+        self._embedder = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-large")
         self._index = self._build_index(self._docs)
+        pipe = pipeline(
+            "text-generation",
+            model="meta-llama/Llama-3.2-3B-Instruct",
+            torch_dtype=torch.bfloat16,
+            device_map="auto",
+            temperature=0.1,  # Controlar la aleatoriedad en la generación
+            do_sample=True,  # Permitir muestreo para la generación
+            repetition_penalty=1.1,  # Penalizar repeticiones para más diversidad
+            return_full_text=False,  # Retornar solo el texto nuevo generado
+            max_new_tokens=500,  # Limitar a 500 tokens la generación
+            use_auth_token=True
+        )
+        self._generator = HuggingFacePipeline(pipeline=pipe)
         self._engine = RAGEngine(self._embedder, self._generator, self._index, self._docs)
 
-    def _load_documents(self, path):
-        with open(path, "r", encoding="utf-8") as f:
-            return [line.strip() for line in f if line.strip()]
+    def _load_documents(self, paths):
+        glossary_doc = [
+            Document(
+                page_content=item["Definicion"],
+                metadata={
+                    "source": item["Termino"],
+                    "tipo": "glosario"
+                }
+            )
+            for item in _load_json(paths[0])
+        ]
+        rules_doc = [
+            Document(page_content=item["Texto"],
+                     metadata={
+                         "source": item["Regla"],
+                         "tipo": "regla"
+                     }
+                     )
+            for item in _load_json(paths[1])
+        ]
+        return rules_doc + glossary_doc
 
     def _build_index(self, docs):
-        embeddings = self._embedder.encode(docs)
-        index = faiss.IndexFlatL2(384)
-        index.add(np.array(embeddings))
-        return index
+        return FAISS.from_documents(docs, self._embedder)
 
     def answer(self, question: str) -> str:
         return self._engine.query(question)
+
+service = RAGService()
