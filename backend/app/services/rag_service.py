@@ -31,7 +31,7 @@ class RAGService:
 
         pipe = pipeline(
             "text-generation",
-            model="meta-llama/Llama-2-7b-chat-hf",
+            model="meta-llama/Llama-3.2-3B-Instruct",
             torch_dtype=torch.bfloat16,
             device_map="auto",
             temperature=0.1,
