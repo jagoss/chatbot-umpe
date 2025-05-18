@@ -33,11 +33,11 @@ class RAGService:
 
         self._embedder = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-large")
         self._index = self._build_index(self._docs)
-        login("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")
+        login("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")
 
         pipe = pipeline(
             "text-generation",
-            model="meta-llama/Llama-2-7b",
+            model="meta-llama/Llama-2-7b-chat-hf",
             torch_dtype=torch.bfloat16,
             device_map="auto",
             temperature=0.1,
