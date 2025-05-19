@@ -14,7 +14,7 @@ class RAGEngine:
         self._index = index
         self._docs = documents
         self._retriever = self._index.as_retriever(search_type="similarity",
-                                                   search_kwargs={"k": 4})
+                                                   search_kwargs={"k": 3})
 
     def query(self, question: str) -> str:
         prompt_template = """

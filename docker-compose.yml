@@ -10,11 +10,6 @@ services:
     environment:
       # para transformers.use_auth_token=True
       HUGGINGFACE_HUB_TOKEN: ${HF_TOKEN}
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [ gpu ]
     volumes:
       - ~/.huggingface:/root/.huggingface:ro
   frontend:

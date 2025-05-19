@@ -16,9 +16,9 @@ package "Backend (FastAPI)" {
 
 package "Infraestructura" {
     database "FAISS Index" as Faiss
-    component "Knowledge Base (knowledge_base.txt)" as KB
+    component "Knowledge Base (chunks de reglas y glosario)" as KB
     component "Embedder (SentenceTransformer)" as Embedder
-    component "LLM Generator (distilgpt2)" as Generator
+    component "LLM Generator (Llama-3.2-3B-Instruct)" as Generator
 }
 
 Usuario --> Frontend : Ingresa pregunta

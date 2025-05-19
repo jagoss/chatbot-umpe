@@ -1,5 +1,4 @@
 import json
-import os
 
 import torch
 from app.domain.rag_engine import RAGEngine
@@ -26,14 +25,9 @@ class RAGService:
         self._engine = None
 
     def load_model(self):
-        if not torch.cuda.is_available():
-            print("❌ No se detectó GPU. Instala torch con soporte CUDA y asegúrate de que el contenedor la ve.")
-            raise RuntimeError(
-                "❌ No se detectó GPU. Instala torch con soporte CUDA y asegúrate de que el contenedor la ve.")
-
         self._embedder = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-large")
         self._index = self._build_index(self._docs)
-        login("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")
+        login("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")
 
         pipe = pipeline(
             "text-generation",
