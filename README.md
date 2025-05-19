@@ -4,9 +4,9 @@ This project implements a chatbot based on the RAG (Retrieval-Augmented Generati
 
 - **Frontend:** Streamlit
 - **Backend:** FastAPI
-- **Embeddings:** SentenceTransformers (`all-MiniLM-L6-v2`)
+- **Embeddings:** SentenceTransformers (`multilingual-e5-large`)
 - **Vector Store:** FAISS
-- **Generation:** Generic LLM model (`distilgpt2`)
+- **Generation:** Generic LLM model (`Llama-3.2-3b`)
 
 ---
 
@@ -24,7 +24,6 @@ chatbot_project/
 │   ├── app/
 │   │   ├── api/
 │   │   │   └── routes.py
-│   │   ├── core/
 │   │   ├── domain/
 │   │   │   └── rag_engine.py
 │   │   ├── services/
